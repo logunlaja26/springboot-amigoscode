@@ -32,10 +32,10 @@ class App extends Component {
       .then(res => res.json()
       .then(students => {
         console.log(students)
-        this.setState({
-          students,
+        this.setState( state => ({
+           students,
           isFetching: false
-        }); 
+        })); 
     }));
   }
   render() {
@@ -91,7 +91,7 @@ class App extends Component {
       ];
 
       return (
-          <Container>
+           <Container>
             <Table 
               dataSource={students} 
               columns={columns} 
