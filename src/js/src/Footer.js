@@ -1,11 +1,17 @@
 import React from 'react';
 import Container from './Container';
-import { Button } from 'antd';
+import { Button, Avatar } from 'antd';
+import './Footer.css';
 
 const Footer = (props) => (
-    <div>
+    <div className='footer'>
         <Container>
-            <Button type='primary'>Add new student +</Button>
+            {props.numberOfStudents ? 
+                <Avatar 
+                style={{backgroundColor: '#f56a00',marginRight: '5px'}}
+                size='large'>{props.numberOfStudents}</Avatar> : null
+            }
+            <Button onClick={() => props.handleAddStudentClickEvent()} type='primary'> Add new student +</Button>
         </Container>
     </div>
 );
