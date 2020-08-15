@@ -16,9 +16,7 @@ const Footer = (props) => (
         </Avatar>
       ) : null}
       <Button
-        onClick={() => {
-          console.log("button click");
-        }}
+        onClick={() => props.handleAddStudentClickEvent()}
         color="primary"
       >
         {" "}

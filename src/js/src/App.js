@@ -15,7 +15,7 @@ class App extends Component {
   state = {
     students: [],
     isFetching: false,
-    isAddStudentModalVisible: true,
+    isAddStudentModalVisible: false,
   };
 
   componentDidMount() {
@@ -110,9 +110,9 @@ class App extends Component {
           />
           <Modal
             title="Add new student"
-            visible={this.isAddStudentModalVisible}
-            onOK={this.closeAddStudentModal}
-            onCancel={this.state}
+            visible={isAddStudentModalVisible}
+            onOk={this.closeAddStudentModal}
+            onCancel={this.closeAddStudentModal}
             width={1000}
           >
             <h1>Antd Hello</h1>
