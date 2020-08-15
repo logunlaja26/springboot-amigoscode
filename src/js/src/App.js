@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import Container from './Container';
 import Footer from './Footer';
+import Modal from './Modal';
 import './App.css';
 import { getAllStudents } from './client';
 import { LoadingOutlined } from '@ant-design/icons';
+//import Modal from '@material-ui/core/Modal';
 import {
-  Table,Avatar,Spin,Modal 
+  Table,Avatar,Spin
 } from 'antd';
 
 
@@ -18,17 +20,28 @@ class App extends Component {
   state = {
     students: [],
     isFetching: false,
-    isAddStudentModalVisible: false
+    show : false, 
+   
+    //isAddStudentModalVisible: true
   }
 
   componentDidMount () {
     this.fetchStudents()
   }
 
-  openAddStudentModal = () => this.setState({isAddStudentModalVisible: true})
+  showModal = () => {
+    this.setState({ show: true });
+  };
 
-  closeAddStudentModal = () => this.setState({isAddStudentModalVisible: false})
+  hideModal = () => {
+    this.setState({ show: false });
+  };
 
+  //openAddStudentModal = () => this.setState({isAddStudentModalVisible: true})
+
+  //closeAddStudentModal = () => this.setState({isAddStudentModalVisible: false})
+
+  
 
   fetchStudents = () => {
     this.setState({
@@ -47,7 +60,7 @@ class App extends Component {
   render() {
 
     
-    const { students, isFetching, isAddStudentModalVisible } = this.state;
+    const { students, isFetching } = this.state;
 
     if (isFetching) {
       return (
@@ -103,17 +116,13 @@ class App extends Component {
               columns={columns} 
               pagination={false}
               rowKey='studentID'/>
-              <Modal>
-                title='Add new student'
-                visible={isAddStudentModalVisible}
-                onOk={this.closeAddStudentModal}>
-                onCancel={this.closeAddStudentModal}
-                width={1000}>
-                <h1>Hello Modal with Antd</h1>
-              </Modal>
+              <Modal show={this.state.show} handleClose={this.hideModal}>
+          <p>Modal</p>
+          <p>Data</p>
+        </Modal>
             <Footer 
               numberOfStudents={students.length}
-              handleAddStudentClickEvent={this.openAddStudentModal}/>
+              handleAddStudentClickEvent={this.showModal}/>
           </Container>
        
         );

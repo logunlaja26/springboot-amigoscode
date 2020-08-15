@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from './Container';
-import { Button, Avatar } from 'antd';
+import { Avatar } from 'antd';
+import Button from '@material-ui/core/Button';
 import './Footer.css';
 
 const Footer = (props) => (
@@ -11,7 +12,7 @@ const Footer = (props) => (
                 style={{backgroundColor: '#f56a00',marginRight: '5px'}}
                 size='large'>{props.numberOfStudents}</Avatar> : null
             }
-            <Button onClick={() => props.handleAddStudentClickEvent()} type='primary'> Add new student +</Button>
+            <Button variant="contained" onClick={handleAddStudentClickEvent()} color="primary"> Add new student +</Button>
         </Container>
     </div>
 );
