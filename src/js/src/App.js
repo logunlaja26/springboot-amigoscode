@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Container from "./Container";
 import Footer from "./Footer";
-//import Modal from "./Modal";
+import AddStudentForm from "./forms/AddStudentForm";
 import "./App.css";
 import { getAllStudents } from "./client";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -115,7 +115,7 @@ class App extends Component {
             onCancel={this.closeAddStudentModal}
             width={1000}
           >
-            <h1>Antd Hello</h1>
+            <AddStudentForm />
           </Modal>
           <Footer
             numberOfStudents={students.length}

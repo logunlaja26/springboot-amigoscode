@@ -1,7 +1,6 @@
 import React from "react";
 import Container from "./Container";
 import { Avatar, Button } from "antd";
-//import Button from '@material-ui/core/Button';
 import "./Footer.css";
 
 const Footer = (props) => (
