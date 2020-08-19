@@ -1,5 +1,7 @@
 package com.lyomann.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.UUID;
 
 public class Student {
@@ -10,11 +12,11 @@ public class Student {
     private final String email;
     private final Gender gender;
 
-    public Student(UUID studentID,
-                   String firstName,
-                   String lastName,
-                   String email,
-                   Gender gender) {
+    public Student(@JsonProperty("studentID") UUID studentID,
+                   @JsonProperty("firstName") String firstName,
+                   @JsonProperty("lastName") String lastName,
+                   @JsonProperty("email") String email,
+                   @JsonProperty("gender") Gender gender) {
         this.studentID = studentID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -42,7 +44,20 @@ public class Student {
         return gender;
     }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentID=" + studentID +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", gender=" + gender +
+                '}';
+    }
+
     public enum Gender{
         MALE, FEMALE
     }
+
+
 }
