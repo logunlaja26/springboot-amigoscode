@@ -21,18 +21,36 @@ public class StudentDataAccessService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    List<Student> selectAllStudents(){
+    List<Student> selectAllStudents() {
         String sql = "" +
                 "SELECT" +
                 " student_id, " +
                 " first_name, " +
-                " last_name, "  +
-                " email, "  +
+                " last_name, " +
+                " email, " +
                 " gender " +
-                "FROM student"
-                ;
+                "FROM student";
         return jdbcTemplate.query(sql, mapStudentFromDb());
 
+    }
+
+    int insertStudent(UUID studentId, Student student) {
+        String sql = "" +
+                "INSERT INTO student (" +
+                "student_id," +
+                "first_name," +
+                "last_name," +
+                "email," +
+                "gender)" + "VALUES (?,?,?,?,?)";
+        return  jdbcTemplate.update(
+                sql,
+                studentId,
+                student.getFirstName(),
+                student.getLastName(),
+                student.getEmail(),
+                student.getGender().name().toUpperCase()
+
+        );
 
     }
 
@@ -56,4 +74,6 @@ public class StudentDataAccessService {
             );
         };
     }
+
+
 }
