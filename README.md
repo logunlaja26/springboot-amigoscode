@@ -1,1 +1,2 @@
-# springboot-amigoscode
+# springboot-react-fullstack
+**springboot backend & react frontend**
