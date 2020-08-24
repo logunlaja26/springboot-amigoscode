@@ -22,14 +22,6 @@ class App extends Component {
     this.fetchStudents();
   }
 
-  // showModal = () => {
-  //   this.setState({ show: true });
-  // };
-
-  // hideModal = () => {
-  //   this.setState({ show: false });
-  // };
-
   openAddStudentModal = () => this.setState({ isAddStudentModalVisible: true });
 
   closeAddStudentModal = () =>
@@ -39,15 +31,22 @@ class App extends Component {
     this.setState({
       isFetching: true,
     });
-    getAllStudents().then((res) =>
-      res.json().then((students) => {
-        console.log(students);
-        this.setState((state) => ({
-          students,
+    getAllStudents()
+      .then((res) =>
+        res.json().then((students) => {
+          console.log(students);
+          this.setState((state) => ({
+            students,
+            isFetching: false,
+          }));
+        })
+      )
+      .catch((error) => {
+        console.log(error.error.message);
+        this.setState({
           isFetching: false,
-        }));
-      })
-    );
+        });
+      });
   };
   render() {
     const { students, isFetching, isAddStudentModalVisible } = this.state;
