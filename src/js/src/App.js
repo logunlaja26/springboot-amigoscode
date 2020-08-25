@@ -6,6 +6,7 @@ import "./App.css";
 import { getAllStudents } from "./client";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Table, Avatar, Spin, Modal } from "antd";
+import { errorNotification } from "./Notification";
 
 const getIndicatorIcon = () => (
   <LoadingOutlined style={{ fontSize: 24 }} spin />
@@ -42,7 +43,9 @@ class App extends Component {
         })
       )
       .catch((error) => {
-        console.log(error.error.message);
+        console.log(error.error);
+        const message = error.error.message;
+        errorNotification(message, message);
         this.setState({
           isFetching: false,
         });
