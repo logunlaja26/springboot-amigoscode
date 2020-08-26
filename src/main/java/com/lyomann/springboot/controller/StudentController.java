@@ -1,5 +1,6 @@
 package com.lyomann.springboot.controller;
 
+import com.lyomann.springboot.exceptions.ApiRequestException;
 import com.lyomann.springboot.model.Student;
 import com.lyomann.springboot.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,8 @@ public class StudentController {
 
     @GetMapping
     public List<Student> getAllStudents(){
-        throw new IllegalStateException("Oops couldn't get all students");
+        throw new ApiRequestException("Oops couldn't get all students");
         //return studentService.getAllStudents();
-
     }
 
     @PostMapping

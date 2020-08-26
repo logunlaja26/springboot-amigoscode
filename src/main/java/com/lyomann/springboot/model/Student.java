@@ -2,11 +2,13 @@ package com.lyomann.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 import java.util.UUID;
 
 public class Student {
 
     private final UUID studentID;
+
     private final String firstName;
     private final String lastName;
     private final String email;
