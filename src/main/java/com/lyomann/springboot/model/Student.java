@@ -3,15 +3,21 @@ package com.lyomann.springboot.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class Student {
 
     private final UUID studentID;
-
+    @NotEmpty
     private final String firstName;
+    @NotEmpty
     private final String lastName;
+    @Email
     private final String email;
+    @NotNull
     private final Gender gender;
 
     public Student(@JsonProperty("studentID") UUID studentID,

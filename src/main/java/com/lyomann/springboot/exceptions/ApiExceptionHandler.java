@@ -21,7 +21,7 @@ public class ApiExceptionHandler {
                 badRequest,
                 ZonedDateTime.now(ZoneId.of("z"))
         );
-        // return response entity
+
         return new ResponseEntity<>(apiException, badRequest);
     }
 }
