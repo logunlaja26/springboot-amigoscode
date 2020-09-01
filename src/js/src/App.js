@@ -45,7 +45,8 @@ class App extends Component {
       .catch((error) => {
         console.log(error.error);
         const message = error.error.message;
-        errorNotification(message, message);
+        const description = error.error.error;
+        errorNotification(message, description);
         this.setState({
           isFetching: false,
         });
@@ -67,6 +68,11 @@ class App extends Component {
             onSuccess={() => {
               this.closeAddStudentModal();
               this.fetchStudents();
+            }}
+            onFailure={(error) => {
+              const message = error.error.message;
+              const description = error.error.httpStatus;
+              errorNotification(message, description);
             }}
           />
         </Modal>

@@ -23,8 +23,8 @@ public class StudentController {
 
     @GetMapping
     public List<Student> getAllStudents(){
-        throw new ApiRequestException("Oops couldn't get all students");
-        //return studentService.getAllStudents();
+        //throw new ApiRequestException("Oops couldn't get all students");
+        return studentService.getAllStudents();
     }
 
     @PostMapping

@@ -38,6 +38,9 @@ public class StudentService {
             throw new ApiRequestException(student.getEmail() + " is not valid");
         }
         //Verify that email is not taken
+        if(studentDataAccessService.isEmailTaken(student.getEmail())){
+            throw new ApiRequestException(student.getEmail() + " is taken");
+        }
         studentDataAccessService.insertStudent(newStudentId, student);
     }
 
