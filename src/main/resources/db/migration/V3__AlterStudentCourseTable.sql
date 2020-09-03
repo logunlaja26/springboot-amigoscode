@@ -1,0 +1,2 @@
+ALTER TABLE course ALTER COLUMN department SET NOT NULL;
+ALTER TABLE course ALTER COLUMN teacher_name SET NOT NULL;
