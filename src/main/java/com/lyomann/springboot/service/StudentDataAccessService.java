@@ -41,7 +41,7 @@ public class StudentDataAccessService {
                 "first_name," +
                 "last_name," +
                 "email," +
-                "gender)" + "VALUES (?,?,?,?,?)";
+                "gender)" + "VALUES (?,?,?,?,?::gender)";
         return  jdbcTemplate.update(
                 sql,
                 studentId,
