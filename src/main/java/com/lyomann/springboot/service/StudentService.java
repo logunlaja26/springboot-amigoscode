@@ -3,6 +3,7 @@ package com.lyomann.springboot.service;
 import com.lyomann.springboot.EmailValidator;
 import com.lyomann.springboot.exceptions.ApiRequestException;
 import com.lyomann.springboot.model.Student;
+import com.lyomann.springboot.model.StudentCourse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,4 +45,7 @@ public class StudentService {
         studentDataAccessService.insertStudent(newStudentId, student);
     }
 
+    public List<StudentCourse> getAllCoursesForStudent(UUID studentID) {
+        return studentDataAccessService.selectAllStudentCourses(studentID);
+    }
 }
