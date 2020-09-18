@@ -13,7 +13,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("students")
+@RequestMapping("api/students")
 public class StudentController {
 
     StudentService studentService;
