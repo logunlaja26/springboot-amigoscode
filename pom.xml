@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
+        <frontend-maven-plugin.version>1.8</frontend-maven-plugin.version>
         <node.version>v12.18.3</node.version>
         <npm.version>v6.14.6</npm.version>
     </properties>
@@ -67,17 +67,22 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <profiles>
         <profile>
             <id>demo</id>
             <build>
                 <plugins>
                     <plugin>
-                        <!-- <groupId>com.github.eirslett</groupId>
-                         <artifactId>frontend-maven-plugin</artifactId>
-                          Use the latest released version:
-                         https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
-                        <!--<version>LATEST_VERSION</version>-->
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.22.2</version>
+                        <configuration>
+                            <testFailureIgnore>true</testFailureIgnore>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
                         <version>1.8.0</version>
@@ -86,46 +91,43 @@
                         </configuration>
                         <executions>
                             <execution>
-                                <id>install node</id>
+                                <id>Install node and npm</id>
                                 <goals>
-                                    <goal>install-node-and-yarn</goal>
+                                    <goal>install-node-and-npm</goal>
                                 </goals>
+                                <phase>generate-resources</phase>
                                 <configuration>
-                                    <nodeVersion>${node.version}</nodeVersion>
-                                    <npmVersion>${npm.version}</npmVersion>
+                                    <nodeVersion>v10.15.2</nodeVersion>
+                                    <npmVersion>6.4.1</npmVersion>
                                 </configuration>
                             </execution>
+
                             <execution>
                                 <id>npm install</id>
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
                                 <phase>generate-resources</phase>
-                            </execution>
-                            <execution>
-                                <id>npm test</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                                <phase>test</phase>
                                 <configuration>
-                                    <arguments>test</arguments>
-                                    <environmentVariables>
-                                        <CI>true</CI>
-                                    </environmentVariables>
+                                    <arguments>install</arguments>
                                 </configuration>
                             </execution>
+
                             <execution>
                                 <id>npm build</id>
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
-                                <phase>compile</phase>
+                                <phase>generate-resources</phase>
                                 <configuration>
-                                    <arguments>build</arguments>
+                                    <arguments>run build</arguments>
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
                     </plugin>
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
@@ -147,19 +149,120 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                        </configuration>
+                    </plugin>
                 </plugins>
             </build>
+            <properties>
+                <spring.profiles.active>
+                    demo
+                </spring.profiles.active>
+            </properties>
+
+        </profile>
+        <profile>
+            <id>demo-compile-to-java-8</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.22.2</version>
+                        <configuration>
+                            <testFailureIgnore>true</testFailureIgnore>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>1.8.0</version>
+                        <configuration>
+                            <workingDirectory>src/js</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>Install node and npm</id>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <nodeVersion>v10.15.2</nodeVersion>
+                                    <npmVersion>6.4.1</npmVersion>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>npm install</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <arguments>install</arguments>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>npm build</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <arguments>run build</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>process-classes</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes/static</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/js/build</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <spring.profiles.active>
+                    demo
+                </spring.profiles.active>
+            </properties>
+
         </profile>
     </profiles>
-
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

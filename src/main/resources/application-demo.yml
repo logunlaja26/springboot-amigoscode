@@ -1,0 +1,11 @@
+
+
+server:
+  port: 5000
+
+app:
+  datasource:
+    jdbc-url: jdbc:postgresql://localhost/postgresql
+    username: postgres
+    password: password
+    pool-size: 30
